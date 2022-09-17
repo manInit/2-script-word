@@ -1,5 +1,6 @@
 from algo import countEquelsWords
 import sys
+from progressBar import ProgressBar 
 from PyQt6.QtWidgets import QApplication, QLabel, QWidget, QTextEdit, QPushButton
 from datetime import datetime
 
@@ -16,6 +17,7 @@ SCREEN_SIZE = window.screen().size()
 
 textEditInput = QTextEdit(parent=window)
 textEditOutput = QTextEdit(parent=window)
+progress = ProgressBar(parent=window)
 btnCalc = QPushButton('Поиск', parent=window)
 helloMsg = QLabel('<h1>Слова</h1>', parent=window)
 
@@ -25,6 +27,8 @@ window.setFixedSize(WINDOW_WIDTH, WINDOW_HEIGHT)
 helloMsg.move(int((WINDOW_WIDTH - helloMsg.fontMetrics().boundingRect(helloMsg.text()).width()) / 2), TOP_PADDING)
 textEditInput.setFixedSize(int(WINDOW_WIDTH / 2), INPUT_HEIGHT)
 textEditOutput.setFixedSize(int(WINDOW_WIDTH / 2), INPUT_HEIGHT)
+progress.setFixedSize(WINDOW_WIDTH, 30)
+progress.move(0, TOP_PADDING_BTN + 50)
 textEditOutput.setReadOnly(True)
 textEditInput.move(0, TOP_PADDING + TOP_PADDING_INPUT)
 textEditOutput.move(int(WINDOW_WIDTH / 2), TOP_PADDING + TOP_PADDING_INPUT)
@@ -33,7 +37,7 @@ btnCalc.move(int((WINDOW_WIDTH - btnCalc.width()) / 2), TOP_PADDING_BTN)
 def onClick():
   start_time = datetime.now()
   inputText = textEditInput.toPlainText()
-  outputText = countEquelsWords(inputText)
+  outputText = countEquelsWords(inputText, progress)
   textEditOutput.setText(outputText)
   print('Время работы: ', datetime.now() - start_time)
 
